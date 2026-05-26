@@ -18,15 +18,21 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath;
+use Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect;
 
 class DashboardPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $locale = LaravelLocalization::setLocale();
+
         return $panel
             ->default()
             ->id('dashboard')
-            ->path('dashboard')
+            ->path(filled($locale) ? "{$locale}/dashboard" : 'dashboard')
             ->login()
             ->colors([
                 'primary' => Color::Blue,
@@ -49,6 +55,9 @@ class DashboardPanelProvider extends PanelProvider
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,
                 SubstituteBindings::class,
+                LocaleSessionRedirect::class,
+                LaravelLocalizationRedirectFilter::class,
+                LaravelLocalizationViewPath::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
