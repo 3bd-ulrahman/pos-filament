@@ -23,9 +23,8 @@ class UsersTable
                     ->label('Email address')
                     ->searchable(),
 
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                TextColumn::make('roles.display_name')
+                    ->label('Role'),
 
                 TextColumn::make('created_at')
                     ->dateTime()
