@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -36,10 +37,12 @@ class UsersTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
+                    ->hidden(fn (User $record): bool => $record->email === 'super_admin@app.com' || auth()->id() === $record->getKey()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->authorizeIndividualRecords('delete'),
                 ]),
             ]);
     }
