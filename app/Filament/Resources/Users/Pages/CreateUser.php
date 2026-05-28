@@ -10,7 +10,7 @@ class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
-    protected ?string $role = null;
+    protected string $role;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
