@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Roles\Pages;
 
 use App\Filament\Resources\Roles\RoleResource;
 use App\Filament\Resources\Roles\Schemas\RoleForm;
+use App\Models\Permission;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Str;
 
 class EditRole extends EditRecord
 {
@@ -29,7 +31,7 @@ class EditRole extends EditRecord
      */
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['permissions'] = RoleForm::permissionsStateFromRecord($this->record->permissions()->get());
+        $data['permissions'] = self::permissionsStateFromRecord($this->record->permissions()->get());
 
         return $data;
     }
@@ -50,5 +52,24 @@ class EditRole extends EditRecord
     protected function afterSave(): void
     {
         $this->record->syncPermissions($this->permissionIds);
+    }
+
+    /**
+     * @param  iterable<Permission>  $permissions
+     * @return array<string, array<int, string>>
+     */
+    private static function permissionsStateFromRecord(iterable $permissions): array
+    {
+        $state = [];
+
+        foreach ($permissions as $permission) {
+            $category = Str::of($permission->name)
+                ->before('-')
+                ->toString();
+
+            $state[$category][] = (string) $permission->getKey();
+        }
+
+        return $state;
     }
 }
