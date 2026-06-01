@@ -24,6 +24,7 @@ class RoleForm
                 TextInput::make('description'),
 
                 Fieldset::make('Permissions')
+                    ->markAsRequired()
                     ->contained(false)
                     ->schema(static::permissionSections())
                     ->columnSpanFull(),
@@ -73,25 +74,6 @@ class RoleForm
                     ->all();
             })
             ->all();
-    }
-
-    /**
-     * @param  iterable<Permission>  $permissions
-     * @return array<string, array<int, string>>
-     */
-    public static function permissionsStateFromRecord(iterable $permissions): array
-    {
-        $state = [];
-
-        foreach ($permissions as $permission) {
-            $category = Str::of($permission->name)
-                ->before('-')
-                ->toString();
-
-            $state[$category][] = (string) $permission->getKey();
-        }
-
-        return $state;
     }
 
     /**
