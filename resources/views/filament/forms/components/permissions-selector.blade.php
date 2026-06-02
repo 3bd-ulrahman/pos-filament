@@ -1,5 +1,6 @@
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     <div
+    wire:ignore
         x-data="{
             state: $wire.entangle('{{ $getStatePath() }}'),
             init() {
