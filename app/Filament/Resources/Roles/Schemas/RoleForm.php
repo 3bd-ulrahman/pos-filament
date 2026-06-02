@@ -19,10 +19,13 @@ class RoleForm
 
                 TextInput::make('display_name'),
 
+                TextInput::make('description'),
+
                 ViewField::make('permissions')
                     ->label('Permissions')
                     ->markAsRequired()
                     ->required()
+                    ->exists('permissions', 'id')
                     ->default([])
                     ->columnSpanFull()
                     ->view('filament.forms.components.permissions-selector')

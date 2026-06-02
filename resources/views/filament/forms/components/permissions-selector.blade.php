@@ -22,8 +22,7 @@
                     </x-slot>
 
                     <div style="display: flex; justify-content: flex-start; margin-bottom: 0.75rem; border-b: 1px solid rgba(156, 163, 175, 0.1); padding-bottom: 0.5rem;">
-                        <button
-                            type="button"
+                        <button type="button"
                             x-on:click="
                                 const ids = {{ $jsonIds }};
                                 const allChecked = ids.every(id => state.includes(id));
@@ -35,7 +34,7 @@
                                     state = [...new Set([...state, ...ids])];
                                 }
                             "
-                            class="text-xs font-semibold text-primary-600 hover:underline dark:text-primary-400"
+                            class="fi-color fi-color-primary fi-text-color-600 dark:fi-text-color-300 fi-link fi-size-sm  fi-ac-link-action"
                         >
                             <span x-text="{{ $jsonIds }}.every(id => state.includes(id)) ? 'Deselect All' : 'Select All'"></span>
                         </button>
