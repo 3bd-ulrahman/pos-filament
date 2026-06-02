@@ -7,7 +7,6 @@ use App\Filament\Resources\Roles\Schemas\RoleForm;
 use App\Models\Permission;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Support\Str;
 
 class EditRole extends EditRecord
 {
@@ -56,20 +55,13 @@ class EditRole extends EditRecord
 
     /**
      * @param  iterable<Permission>  $permissions
-     * @return array<string, array<int, string>>
+     * @return array<int, string>
      */
     private static function permissionsStateFromRecord(iterable $permissions): array
     {
-        $state = [];
-
-        foreach ($permissions as $permission) {
-            $category = Str::of($permission->name)
-                ->before('-')
-                ->toString();
-
-            $state[$category][] = (string) $permission->getKey();
-        }
-
-        return $state;
+        return collect($permissions)
+            ->map(static fn (Permission $permission): string => (string) $permission->getKey())
+            ->values()
+            ->all();
     }
 }

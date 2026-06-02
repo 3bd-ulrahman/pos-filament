@@ -3,10 +3,8 @@
 namespace App\Filament\Resources\Roles\Schemas;
 
 use App\Models\Permission;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Fieldset;
-use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\ViewField;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -21,34 +19,17 @@ class RoleForm
 
                 TextInput::make('display_name'),
 
-                TextInput::make('description'),
-
-                Fieldset::make('Permissions')
+                ViewField::make('permissions')
+                    ->label('Permissions')
                     ->markAsRequired()
-                    ->contained(false)
-                    ->schema(static::permissionSections())
-                    ->columnSpanFull(),
+                    ->required()
+                    ->default([])
+                    ->columnSpanFull()
+                    ->view('filament.forms.components.permissions-selector')
+                    ->viewData([
+                        'groupedPermissions' => static::groupedPermissionsOptions(),
+                    ]),
             ]);
-    }
-
-    /**
-     * @return array<int, Section>
-     */
-    protected static function permissionSections(): array
-    {
-        return collect(static::groupedPermissionsOptions())
-            ->map(static function (array $options, string $category): Section {
-                return Section::make(Str::headline($category))
-                    ->columnSpan(1)
-                    ->schema([
-                        CheckboxList::make("permissions.{$category}")
-                            ->options($options)
-                            ->bulkToggleable()
-                            ->columns(2),
-                    ]);
-            })
-            ->values()
-            ->all();
     }
 
     /**
