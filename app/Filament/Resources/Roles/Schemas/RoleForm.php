@@ -17,7 +17,8 @@ class RoleForm
                 TextInput::make('name')
                     ->required(),
 
-                TextInput::make('display_name'),
+                TextInput::make('display_name')
+                    ->required(),
 
                 TextInput::make('description'),
 
