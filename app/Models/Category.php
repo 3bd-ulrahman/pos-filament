@@ -11,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 #[UseFactory(CategoryFactory::class)]
 class Category extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
+    /** @use HasFactory<CategoryFactory> */
     use HasFactory, HasTranslations;
 
     protected $table = 'categories';

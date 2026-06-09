@@ -11,7 +11,12 @@ class CategoryForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                TextInput::make('name.en')
+                    ->label(__('dashboard.name_en'))
+                    ->required(),
+
+                TextInput::make('name.ar')
+                    ->label(__('dashboard.name_ar'))
                     ->required(),
             ]);
     }
