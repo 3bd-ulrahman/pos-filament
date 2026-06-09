@@ -20,6 +20,16 @@ class CategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getModelLabel(): string
+    {
+        return __('dashboard.category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('dashboard.categories');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);

@@ -16,7 +16,7 @@ class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable()
+                    ->searchable(),
             ])
             ->filters([
                 //

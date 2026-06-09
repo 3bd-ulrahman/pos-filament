@@ -12,7 +12,7 @@ use Laratrust\Traits\HasRolesAndPermissions;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRolesAndPermissions;
+    use HasFactory, HasRolesAndPermissions, Notifiable;
 
     protected $table = 'users';
 

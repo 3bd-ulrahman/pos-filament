@@ -21,7 +21,7 @@ class CategoryFactory extends Factory
             'name' => [
                 'ar' => fake('ar_EG')->word(),
                 'en' => fake('en_US')->word(),
-            ]
+            ],
         ];
     }
 }

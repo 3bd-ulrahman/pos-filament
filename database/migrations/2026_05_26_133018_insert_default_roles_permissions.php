@@ -4,8 +4,6 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -48,7 +46,7 @@ return new class extends Migration
             $role = Role::query()->firstOrCreate([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => ucwords(str_replace('_', ' ', $key))
+                'description' => ucwords(str_replace('_', ' ', $key)),
             ]);
             $permissions = [];
 
@@ -58,9 +56,9 @@ return new class extends Migration
                     $permissionValue = $mapPermission->get($perm);
 
                     $permissions[] = Permission::query()->firstOrCreate([
-                        'name' => $module . '-' . $permissionValue,
-                        'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
-                        'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
+                        'name' => $module.'-'.$permissionValue,
+                        'display_name' => ucfirst($permissionValue).' '.ucfirst($module),
+                        'description' => ucfirst($permissionValue).' '.ucfirst($module),
                     ])->id;
                 }
             }
@@ -72,7 +70,7 @@ return new class extends Migration
             $user = User::query()->create([
                 'name' => ucwords(str_replace('_', ' ', $key)),
                 'email' => $key.'@app.com',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
             ]);
 
             $user->addRole($role);
