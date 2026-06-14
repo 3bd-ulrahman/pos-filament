@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -33,6 +34,14 @@ class DashboardPanelProvider extends PanelProvider
             ->default()
             ->id('dashboard')
             ->path(filled($locale) ? "{$locale}/dashboard" : 'dashboard')
+            ->userMenuItems([
+                Action::make('lang')
+                    ->label(fn (): string => app()->getLocale() === 'ar' ? 'English' : 'العربية')
+                    ->url(fn (): string => LaravelLocalization::getLocalizedURL(
+                        app()->getLocale() === 'ar' ? 'en' : 'ar'
+                    ))
+                    ->icon('heroicon-o-language'),
+            ])
             ->login()
             ->colors([
                 'primary' => Color::Blue,

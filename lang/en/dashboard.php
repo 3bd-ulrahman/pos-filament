@@ -8,4 +8,10 @@ return [
     'name' => 'Name',
     'name_en' => 'Name (English)',
     'name_ar' => 'Name (Arabic)',
+
+    'user' => 'User',
+    'users' => 'Users',
+
+    'role' => 'Role',
+    'roles' => 'Roles',
 ];
