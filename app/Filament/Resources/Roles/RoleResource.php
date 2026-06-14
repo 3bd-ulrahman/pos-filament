@@ -20,6 +20,16 @@ class RoleResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getModelLabel(): string
+    {
+        return __('dashboard.role');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('dashboard.roles');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return RoleForm::configure($schema);
