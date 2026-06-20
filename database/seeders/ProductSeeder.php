@@ -14,10 +14,11 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = Category::query()->get();
+        $categoryIds = Category::query()->pluck('id')->toArray();
 
-        Product::factory()->count(100)->state([
-            'category_id' => $categories->random()->id
-        ])->create();
+        Product::factory()
+            ->count(100)
+            ->sequence(fn() => ['category_id' => $categoryIds[array_rand($categoryIds)]])
+            ->create();
     }
 }
